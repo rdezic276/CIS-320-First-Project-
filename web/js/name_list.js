@@ -88,7 +88,7 @@ function val() {
     var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var phoneReg = /^([0-9]{3})[-]([0-9]{3})[-]([0-9]{4})$/;
     var birthdayReg = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
-
+    var valid_form = true;
     if (nameReg.test(firstName)) {
         // Set style for outline of form field
         $('#firstNameDiv').removeClass("has-error");
@@ -112,7 +112,9 @@ function val() {
 
 // Put in the field used by screen readers
         $('#firstNameStatus').val("(success)");
+        var valid_form = false;
     }
+
     if (nameReg.test(lastName)) {
         // Set style for outline of form field
         $('#lastNameDiv').removeClass("has-error");
@@ -136,6 +138,7 @@ function val() {
 
 // Put in the field used by screen readers
         $('#lastNameStatus').val("(success)");
+        var valid_form = false;
     }
 
     if (emailReg.test(email)) {
@@ -161,6 +164,7 @@ function val() {
 
 // Put in the field used by screen readers
         $('#emailStatus').val("(success)");
+        var valid_form = false;
     }
 
     if (phoneReg.test(phone)) {
@@ -186,6 +190,7 @@ function val() {
 
 // Put in the field used by screen readers
         $('#phoneStatus').val("(success)");
+        var valid_form = false;
     }
 
     if (birthdayReg.test(birthday)) {
@@ -211,7 +216,24 @@ function val() {
 
 // Put in the field used by screen readers
         $('#birthdayStatus').val("(success)");
+        var valid_form = false;
+    }
+    if (valid_form) {
+        <!-- AJAX Post -->
+
+
+            var url = "/api/name_list_edit";
+
+            var dataToServer = {first: firstName, last: lastName, email: email, phone: phone, birthday: birthday};
+
+            $.post(url, dataToServer, function (dataFromServer) {
+                console.log("Finished calling servlet.");
+                console.log(dataFromServer);
+            });
+        }
+    else {
+            console.log("is not valid")
+        }
+
     }
 
-
-}
