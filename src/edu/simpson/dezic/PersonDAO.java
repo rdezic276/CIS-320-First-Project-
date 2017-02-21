@@ -22,6 +22,7 @@ public class PersonDAO {
 
     /**
      * Get a list of the people in the database.
+     *
      * @return Returns a list of instances of the People class.
      */
     public static List<Person> getPeople() {
@@ -56,7 +57,7 @@ public class PersonDAO {
             rs = stmt.executeQuery();
 
             // Loop through each record
-            while(rs.next()) {
+            while (rs.next()) {
                 // Create a new instance of the Person object.
                 // You'll need to define that somewhere. Just a simple class with getters and setters on the
                 // fields.
@@ -74,18 +75,81 @@ public class PersonDAO {
                 list.add(person);
             }
         } catch (SQLException se) {
-            log.log(Level.SEVERE, "SQL Error", se );
+            log.log(Level.SEVERE, "SQL Error", se);
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Error", e );
+            log.log(Level.SEVERE, "Error", e);
         } finally {
             // Ok, close our result set, statement, and connection
-            try { rs.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
-            try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
-            try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try {
+                rs.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+            try {
+                conn.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
         }
         // Done! Return the results
         return list;
     }
 
+    public static void editPerson(String firstName, String LastName, String email, String phone, String birthday ) {
+        log.log(Level.FINE, "edit person");
+
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+
+        // Databases are unreliable. Use some exception handling
+        try {
+            // Get our database connection
+            conn = DBHelper.getConnection();
+
+            Person person = new Person();
+            // If you had parameters, it would look something like
+            String sql = "INSERT INTO person (first, last, phone, email, birthday) value (?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, person.getFirst());
+            stmt.setString(2, person.getLast());
+            stmt.setString(3, person.getEmail());
+            stmt.setString(4, person.getPhone());
+            stmt.setString(5, person.getBirthday());
+
+            // Create an object with all the info about our SQL statement to run.
+            //stmt = conn.prepareStatement(sql);
+
+
+            // Execute the SQL and get the results
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e);
+        } finally {
+            // Ok, close our result set, statement, and connection
+
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+            try {
+                conn.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+        }
+
+    }
 }
 

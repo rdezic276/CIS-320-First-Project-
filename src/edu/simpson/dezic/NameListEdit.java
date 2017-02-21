@@ -54,6 +54,16 @@ public class NameListEdit extends HttpServlet {
 
         // Just print the data out to confirm we got it.
         out.println("birthday='"+birthday+"'");
+
+        Person person = new Person();
+        person.setFirst(first);
+        person.setLast(last);
+        person.setEmail(email);
+        person.setPhone(phone);
+        person.setBirthday(birthday);
+        PersonDAO.editPerson(person);
+
     }
+
 
 }
