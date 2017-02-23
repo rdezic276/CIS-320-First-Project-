@@ -100,7 +100,7 @@ public class PersonDAO {
         return list;
     }
 
-    public static void editPerson(String firstName, String LastName, String email, String phone, String birthday ) {
+    public static void editPerson(Person person) {
         log.log(Level.FINE, "edit person");
 
 
@@ -114,7 +114,7 @@ public class PersonDAO {
             // Get our database connection
             conn = DBHelper.getConnection();
 
-            Person person = new Person();
+            //Person person = new Person();
             // If you had parameters, it would look something like
             String sql = "INSERT INTO person (first, last, phone, email, birthday) value (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
