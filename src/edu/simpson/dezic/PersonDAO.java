@@ -120,9 +120,10 @@ public class PersonDAO {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, person.getFirst());
             stmt.setString(2, person.getLast());
-            stmt.setString(3, person.getEmail());
-            stmt.setString(4, person.getPhone());
+            stmt.setString(3, person.getPhone());
+            stmt.setString(4, person.getEmail());
             stmt.setString(5, person.getBirthday());
+            //log.log(Level.SEVERE, + person.getPhone() "SQL Error");
 
             // Create an object with all the info about our SQL statement to run.
             //stmt = conn.prepareStatement(sql);

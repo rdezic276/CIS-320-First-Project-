@@ -74,6 +74,10 @@ updateTable();
 
 function saveChanges() {
     val();
+    clearTable()
+
+
+
 }
 var saveChangeButton = $('#saveChanges');
 saveChangeButton.on("click", saveChanges);
@@ -87,7 +91,11 @@ function val() {
     var nameReg = /^[A-Za-z-.']{1,45}$/;
     var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var phoneReg = /^([0-9]{3})[-]([0-9]{3})[-]([0-9]{4})$/;
-    var birthdayReg = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    var birthdayReg = /^\d{4}-\d{2}-\d{2}$/;
+    console.log(birthday);
+    //var birthdayReg = /^(19|20)[1-9]{2}[- /](0[1-9]|1[012])[- /](0[1-9]|[12][0-9]|3[01])$/;
+
+
     var valid_form = true;
     if (nameReg.test(firstName)) {
         // Set style for outline of form field
@@ -218,22 +226,27 @@ function val() {
         $('#birthdayStatus').val("(success)");
         var valid_form = false;
     }
-    if (valid_form) {
-        <!-- AJAX Post -->
+    if (valid_form == true);
+    {
+        console.log(valid_form);
+        var url = "api/name_list_edit";
+        var idValue = $("#id").val();
+        var firstNameValue = $("#firstName").val()
+        var lastNameValue = $("#lastName").val()
+        var emailValue = $("#email").val()
+        var phoneValue = $("#phone").val()
+        var birthdayValue = $("#birthday").val()
+        var dataToServer = { id : idValue, firstName: firstNameValue, lastName: lastNameValue, email: emailValue, phone: phoneValue, birthday: birthdayValue };
 
+        $.post(url, dataToServer, function (dataFromServer) {
+            console.log("Finished calling servlet.");
+            console.log(dataFromServer);
+        });
 
-            var url = "/api/name_list_edit";
-
-            var dataToServer = {first: firstName, last: lastName, email: email, phone: phone, birthday: birthday};
-
-            $.post(url, dataToServer, function (dataFromServer) {
-                console.log("Finished calling servlet.");
-                console.log(dataFromServer);
-            });
-        }
-    else {
-            console.log("is not valid")
-        }
 
     }
 
+
+}function clearTable() {
+    $("#datatable tbody tr").empty();
+}

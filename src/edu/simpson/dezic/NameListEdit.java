@@ -44,7 +44,7 @@ public class NameListEdit extends HttpServlet {
 
 
         String phone = request.getParameter("phone");
-
+        phone = phone.replace("-", "");
         // Just print the data out to confirm we got it.
         out.println("phone='"+phone+"'");
 
