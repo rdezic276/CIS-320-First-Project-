@@ -27,7 +27,7 @@ public class NameListEdit extends HttpServlet {
         lastNameValidationPattern = Pattern.compile("^[A-Za-z]{1,10}$");
         emailValidationPattern = Pattern.compile("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
         phoneValidationPattern = Pattern.compile("^([0-9]{3})[-]([0-9]{3})[-]([0-9]{4})$");
-        birthdayValidationPattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$/");
+        birthdayValidationPattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     }
 
     private final static Logger log = Logger.getLogger(NameListEdit.class.getName());
@@ -42,72 +42,63 @@ public class NameListEdit extends HttpServlet {
         out.println("Post");
 
         // Grab the data we got via a parameter
-        String first = request.getParameter("first");
+        String first = request.getParameter("firstName");
         out.println("firstName='"+first+"'");
         Matcher m = firstNameValidationPattern.matcher(first);
-        if (m.find( )) {
-            out.println("Passed validation");
-        } else {
-            out.println("Did not pass validation");
-        }
 
 
 
-        String last = request.getParameter("last");
+
+        String last = request.getParameter("lastName");
         out.println("lastName='"+last+"'");
         Matcher n = lastNameValidationPattern.matcher(last);
-        if (n.find( )) {
-            out.println("Passed validation");
-        } else {
-            out.println("Did not pass validation");
-        }
+
 
 
 
         String email = request.getParameter("email");
         out.println("email='"+email+"'");
         Matcher o = emailValidationPattern.matcher(email);
-        if (o.find( )) {
-            out.println("Passed validation");
-        } else {
-            out.println("Did not pass validation");
-        }
+
 
 
 
         String phone = request.getParameter("phone");
-        phone = phone.replace("-", "");
         out.println("phone='"+phone+"'");
         Matcher p = phoneValidationPattern.matcher(phone);
-        if (p.find( )) {
-            out.println("Passed validation");
-        } else {
-            out.println("Did not pass validation");
-        }
+
 
 
 
         String birthday = request.getParameter("birthday");
         out.println("birthday='"+birthday+"'");
         Matcher q = birthdayValidationPattern.matcher(birthday);
-        if (q.find( )) {
+
+        //out.println(String.format("Round 1 %s %s %s %s %s", m.find( ) , n.find() , o.find() , p.find() , q.find()));
+        //out.println(String.format("Round 2 %s %s %s %s %s", m.find( ) , n.find() , o.find() , p.find() , q.find()));
+        //out.println(String.format("Round 3 %s, %s", m.find( ) && n.find() , o.find() && p.find() && q.find()));
+
+        //out.println(String.format("Round 4 %s", m.find( ) && n.find() && o.find() && p.find() && q.find()));
+
+
+        if (m.find( ) && n.find() && o.find() && p.find() && q.find()) {
             out.println("Passed validation");
-        } else {
+            phone = phone.replace("-", "");
+
+            Person person = new Person();
+            person.setFirst(first);
+            person.setLast(last);
+            person.setEmail(email);
+            person.setPhone(phone);
+            person.setBirthday(birthday);
+            //This is where code from online example should go.
+
+
+            PersonDAO.editPerson(person);
+        }
+        else {
             out.println("Did not pass validation");
         }
-
-
-        Person person = new Person();
-        person.setFirst(first);
-        person.setLast(last);
-        person.setEmail(email);
-        person.setPhone(phone);
-        person.setBirthday(birthday);
-      //This is where code from online example should go.
-
-
-
-        PersonDAO.editPerson(person);
 
     }
 
