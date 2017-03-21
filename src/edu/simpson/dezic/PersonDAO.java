@@ -64,7 +64,7 @@ public class PersonDAO {
                 Person person = new Person();
 
                 // Get the data from the result set, and copy it to the Person object
-                person.setId(rs.getInt("id"));
+                person.setId(rs.getString("id"));
                 person.setFirst(rs.getString("first"));
                 person.setLast(rs.getString("last"));
                 person.setEmail(rs.getString("email"));
@@ -120,14 +120,6 @@ public class PersonDAO {
             String sql = "delete from person where id = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, id);
-
-            //log.log(Level.SEVERE, + person.getPhone() "SQL Error");
-
-            // Create an object with all the info about our SQL statement to run.
-            //stmt = conn.prepareStatement(sql);
-
-
-            // Execute the SQL and get the results
             stmt.executeUpdate();
 
         } catch (SQLException se) {
@@ -150,6 +142,7 @@ public class PersonDAO {
         }
 
     }
+
     public static void editPerson(Person person) {
         final Logger log = Logger.getLogger(PersonDAO.class.getName());
 
@@ -175,13 +168,8 @@ public class PersonDAO {
             stmt.setString(3, person.getPhone());
             stmt.setString(4, person.getEmail());
             stmt.setString(5, person.getBirthday());
-            //log.log(Level.SEVERE, + person.getPhone() "SQL Error");
-
-            // Create an object with all the info about our SQL statement to run.
-            //stmt = conn.prepareStatement(sql);
 
 
-            // Execute the SQL and get the results
             stmt.executeUpdate();
 
         } catch (SQLException se) {
@@ -204,5 +192,57 @@ public class PersonDAO {
         }
 
     }
-}
 
+
+    public static void editPersons(Person person) {
+        final Logger log = Logger.getLogger(PersonDAO.class.getName());
+
+        log.log(Level.FINE, "edit persons");
+
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+
+        // Databases are unreliable. Use some exception handling
+        try {
+            // Get our database connection
+            conn = DBHelper.getConnection();
+
+            //Person person = new Person();
+            // If you had parameters, it would look something like
+            String sql = "update person set first=? , last=? , phone=?, email=?, birthday=? where id=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, person.getFirst());
+            stmt.setString(2, person.getLast());
+            stmt.setString(3, person.getPhone());
+            stmt.setString(4, person.getEmail());
+            stmt.setString(5, person.getBirthday());
+            stmt.setString(6, String.valueOf(person.getId()));
+
+
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e);
+        } finally {
+            // Ok, close our result set, statement, and connection
+
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+            try {
+                conn.close();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Error", e);
+            }
+        }
+
+    }
+
+}

@@ -31,7 +31,7 @@ public class NameListEdit extends HttpServlet {
     }
 
     private final static Logger log = Logger.getLogger(NameListEdit.class.getName());
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.log(Level.SEVERE, "Hello");
 
         // You can output in any format, text/JSON, text/HTML, etc. We'll keep it simple
@@ -41,37 +41,32 @@ public class NameListEdit extends HttpServlet {
         // Print that this is a post
         out.println("Post");
 
+        String id = request.getParameter("id");
+        out.println("id='" + id + "'");
+
         // Grab the data we got via a parameter
         String first = request.getParameter("firstName");
-        out.println("firstName='"+first+"'");
+        out.println("firstName='" + first + "'");
         Matcher m = firstNameValidationPattern.matcher(first);
 
 
-
-
         String last = request.getParameter("lastName");
-        out.println("lastName='"+last+"'");
+        out.println("lastName='" + last + "'");
         Matcher n = lastNameValidationPattern.matcher(last);
 
 
-
-
         String email = request.getParameter("email");
-        out.println("email='"+email+"'");
+        out.println("email='" + email + "'");
         Matcher o = emailValidationPattern.matcher(email);
 
 
-
-
         String phone = request.getParameter("phone");
-        out.println("phone='"+phone+"'");
+        out.println("phone='" + phone + "'");
         Matcher p = phoneValidationPattern.matcher(phone);
 
 
-
-
         String birthday = request.getParameter("birthday");
-        out.println("birthday='"+birthday+"'");
+        out.println("birthday='" + birthday + "'");
         Matcher q = birthdayValidationPattern.matcher(birthday);
 
         //out.println(String.format("Round 1 %s %s %s %s %s", m.find( ) , n.find() , o.find() , p.find() , q.find()));
@@ -80,27 +75,49 @@ public class NameListEdit extends HttpServlet {
 
         //out.println(String.format("Round 4 %s", m.find( ) && n.find() && o.find() && p.find() && q.find()));
 
-
-        if (m.find( ) && n.find() && o.find() && p.find() && q.find()) {
-            out.println("Passed validation");
-            phone = phone.replace("-", "");
-
-            Person person = new Person();
-            person.setFirst(first);
-            person.setLast(last);
-            person.setEmail(email);
-            person.setPhone(phone);
-            person.setBirthday(birthday);
-            //This is where code from online example should go.
+        if (id == null) {
 
 
-            PersonDAO.editPerson(person);
+            if (m.find() && n.find() && o.find() && p.find() && q.find()) {
+                out.println("Passed validation");
+                phone = phone.replace("-", "");
+
+                Person person = new Person();
+                person.setFirst(first);
+                person.setLast(last);
+                person.setEmail(email);
+                person.setPhone(phone);
+                person.setBirthday(birthday);
+                //This is where code from online example should go.
+
+
+                PersonDAO.editPerson(person);
+            } else {
+                out.println("Did not pass validation");
+            }
+
         }
         else {
-            out.println("Did not pass validation");
+            if (m.find() && n.find() && o.find() && p.find() && q.find()) {
+                out.println("Passed validation");
+                phone = phone.replace("-", "");
+
+                Person person = new Person();
+                person.setId(id);
+                person.setFirst(first);
+                person.setLast(last);
+                person.setEmail(email);
+                person.setPhone(phone);
+                person.setBirthday(birthday);
+                //This is where code from online example should go.
+
+
+                PersonDAO.editPersons(person);
+            } else {
+                out.println("Did not pass validation");
+            }
+
         }
-
     }
-
 
 }
