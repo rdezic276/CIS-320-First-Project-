@@ -143,7 +143,7 @@ public class PersonDAO {
 
     }
 
-    public static void editPerson(Person person) {
+    public static void addPerson(Person person) {
         final Logger log = Logger.getLogger(PersonDAO.class.getName());
 
         log.log(Level.FINE, "edit person");

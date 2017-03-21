@@ -75,11 +75,11 @@ public class NameListEdit extends HttpServlet {
 
         //out.println(String.format("Round 4 %s", m.find( ) && n.find() && o.find() && p.find() && q.find()));
 
-        if (id == null) {
+        if (id == null|| id.length() == 0) {
 
 
             if (m.find() && n.find() && o.find() && p.find() && q.find()) {
-                out.println("Passed validation");
+                out.println("Passed validation1");
                 phone = phone.replace("-", "");
 
                 Person person = new Person();
@@ -91,7 +91,7 @@ public class NameListEdit extends HttpServlet {
                 //This is where code from online example should go.
 
 
-                PersonDAO.editPerson(person);
+                PersonDAO.addPerson(person);
             } else {
                 out.println("Did not pass validation");
             }
@@ -99,7 +99,7 @@ public class NameListEdit extends HttpServlet {
         }
         else {
             if (m.find() && n.find() && o.find() && p.find() && q.find()) {
-                out.println("Passed validation");
+                out.println("Passed validation2");
                 phone = phone.replace("-", "");
 
                 Person person = new Person();
