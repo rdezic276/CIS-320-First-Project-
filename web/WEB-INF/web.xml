@@ -36,5 +36,40 @@
 
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>get_login_servlet</servlet-name>
+        <servlet-class>edu.simpson.dezic.get_login_servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get_login_servlet</servlet-name>
+        <url-pattern>/api/get_login_servlet</url-pattern>
+
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>login_servlet</servlet-name>
+        <servlet-class>edu.simpson.dezic.login_servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>login_servlet</servlet-name>
+        <url-pattern>/api/login_servlet</url-pattern>
+
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>invalidate_session_servlet</servlet-name>
+        <servlet-class>edu.simpson.dezic.invalidate_session_servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>invalidate_session_servlet</servlet-name>
+        <url-pattern>/api/invalidate_session_servlet</url-pattern>
+
+    </servlet-mapping>
+
 </web-app>
 
